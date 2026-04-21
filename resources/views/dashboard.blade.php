@@ -156,6 +156,46 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="bg-white p-4 rounded shadow">
+        <canvas id="filiereChart" height="200"></canvas>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <canvas id="statusChart" height="200"></canvas>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filiereCtx = document.getElementById('filiereChart').getContext('2d');
+    const filiereData = @json($encaissementsFiliere);
+    new Chart(filiereCtx, {
+        type: 'bar',
+        data: {
+            labels: filiereData.map(i => i.filiere),
+            datasets: [{
+                label: 'Encaissements (MAD)',
+                data: filiereData.map(i => i.total),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            }]
+        }
+    });
+
+    const statusCtx = document.getElementById('statusChart').getContext('2d');
+    const statusData = @json($statuts);
+    new Chart(statusCtx, {
+        type: 'pie',
+        data: {
+            labels: statusData.map(s => s.statut_paiement),
+            datasets: [{
+                data: statusData.map(s => s.total),
+                backgroundColor: ['#10B981', '#F59E0B', '#EF4444']
+            }]
+        }
+    });
+});
+</script>
         @else
             <p class="text-gray-500 text-center py-8">Aucun paiement enregistré</p>
         @endif

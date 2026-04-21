@@ -48,9 +48,9 @@ class PaymentController extends Controller
 
         $payment = Payment::create($validated);
 
-        // Matching automatique si pas d'etudiant selectionne
+        // Matching automatique si pas d'étudiant sélectionné
         if (!$payment->student_id) {
-            $matchedStudent = $this->matchingEngine->matchPaymentWithStudent($payment);
+            $matchedStudent = $this->matchingEngine->advancedMatch($payment);
             if ($matchedStudent) {
                 $payment->student_id = $matchedStudent->id;
                 $payment->est_auto_match = true;

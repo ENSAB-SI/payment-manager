@@ -29,4 +29,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/search', [SearchController::class, 'index'])->name('search.index');
     Route::get('/search/api', [SearchController::class, 'search'])->name('search.api');
+
+Route::get('/report/revenue', [App\Http\Controllers\ReportController::class, 'revenueReport'])->name('report.revenue');
+Route::get('/report/student/{student}', [App\Http\Controllers\ReportController::class, 'studentReport'])->name('report.student');
+Route::get('/report/payments', [App\Http\Controllers\ReportController::class, 'paymentsReport'])->name('report.payments');
 });
